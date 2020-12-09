@@ -1,0 +1,1 @@
+export DATABASE_URL=postgres://postgres:a@localhost:5432/dogmatch
