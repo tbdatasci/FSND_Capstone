@@ -1,1 +1,1 @@
-export DATABASE_URL=postgres://postgres:a@localhost:5432/dogmatch
+export DATABASE_URL=postgres://postgres:postgres@localhost:5432/postgres
