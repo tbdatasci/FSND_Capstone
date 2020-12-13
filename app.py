@@ -43,7 +43,7 @@ def create_app(test_config=None):
             except Exception as E:
                 abort(422)
         except Exception as E:
-            abort(500)
+            abort(400)
 
     @app.route('/actors', methods=['POST'])
     # @requires_auth('post:actors')
