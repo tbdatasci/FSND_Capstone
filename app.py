@@ -71,7 +71,10 @@ def create_app(test_config=None):
 
             return jsonify({
                 'success': True,
-                'actor': "Your Mom"
+                'actor': "Your Mom",
+                'name': new_name,
+                'age': new_age,
+                'gender': new_gender
             }), 200
         except Exception as E:
             abort(422)
