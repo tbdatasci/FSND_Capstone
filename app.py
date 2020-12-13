@@ -52,21 +52,21 @@ def create_app(test_config=None):
         REQUIRES Authorization to CREATE NEW ACTORS
         take Actor object and commit itself to the database
         '''
-        body = request.get_json()
-        new_name = body.get('name')
-        new_age = body.get('age')
-        new_gender = body.get('gender')
+        body = request.json
+        new_name = body['name']
+        new_age = body['age']
+        new_gender = body['gender']
 
         if new_name is None:
             abort(400)
         try:
             actor = Actor(name=new_name, age=new_age, gender=new_gender)
             actor.insert()
-            # new_actor = actor.format()
+            new_actor = actor.format()
 
             return jsonify({
                 'success': True,
-                # 'actor': new_actor
+                'actor': new_actor
             }), 200
         except Exception as E:
             abort(422)
