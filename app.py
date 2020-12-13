@@ -46,7 +46,7 @@ def create_app(test_config=None):
             abort(500)
 
     @app.route('/actors', methods=['POST'])
-    @requires_auth('post:actors')
+    # @requires_auth('post:actors')
     def create_actor(self):
         '''
         REQUIRES Authorization to CREATE NEW ACTORS
@@ -72,7 +72,7 @@ def create_app(test_config=None):
             abort(422)
 
     @app.route('/actors/<int:actor_id>', methods=['PATCH'])
-    @requires_auth('patch:actors')
+    # @requires_auth('patch:actors')
     def update_actor(self, actor_id):
         '''
         API make EDITS to an EXISTING actor object.
@@ -107,7 +107,7 @@ def create_app(test_config=None):
             abort(422)
 
     @app.route('/actors/<int:actor_id>', methods=['DELETE'])
-    @requires_auth('delete:actors')
+    # @requires_auth('delete:actors')
     def delete_actor(actor_id):
         '''
         Ability to delete actors from database
@@ -150,7 +150,7 @@ def create_app(test_config=None):
             abort(500)
 
     @app.route('/movies', methods=['POST'])
-    @requires_auth('post:movies')
+    # @requires_auth('post:movies')
     def create_movie():
         '''
         REQUIRES AUTH to CREATE NEW movie object.
@@ -183,7 +183,7 @@ def create_app(test_config=None):
             abort(422)
 
     @app.route('/movies/<int:movie_id>', methods=['{PATCH'])
-    @requires_auth('patch:movies')
+    # @requires_auth('patch:movies')
     def update_movie(movie_id):
         '''
         Make UPDATES to an existing movie object in the database
@@ -219,7 +219,7 @@ def create_app(test_config=None):
             abort(422)
 
     @app.route('/movies/<int:movie_id>', methods=['DELETE'])
-    @requires_auth('delete:movies')
+    # @requires_auth('delete:movies')
     def delete_movie(movie_id):
         '''
         REQUIRES AUTH to delete movie/row from the database.
