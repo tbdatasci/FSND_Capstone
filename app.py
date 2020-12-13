@@ -47,7 +47,7 @@ def create_app(test_config=None):
 
     @app.route('/actors', methods=['POST'])
     # @requires_auth('post:actors')
-    def create_actor(payload):
+    def create_actor():
         '''
         REQUIRES Authorization to CREATE NEW ACTORS
         take Actor object and commit itself to the database
