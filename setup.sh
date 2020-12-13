@@ -1,1 +1,1 @@
-export DATABASE_URL=postgres://postgres:postgres@localhost:5432/postgres
+export DATABASE_URL=postgres://gagjyzcigbdpwc:317746f5145dc2756186633f4a5604a8cc586e504a3fc8f98fcd783662290cd2@ec2-54-157-66-140.compute-1.amazonaws.com:5432/dcd1karb3ge53g
