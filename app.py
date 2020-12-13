@@ -60,6 +60,9 @@ def create_app(test_config=None):
         if new_name is None:
             abort(400)
         try:
+            return jsonify({
+                'got here'
+            })
             actor = Actor(name=new_name, age=new_age, gender=new_gender)
             actor.insert()
             new_actor = actor.format()
