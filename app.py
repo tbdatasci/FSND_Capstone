@@ -63,11 +63,11 @@ def create_app(test_config=None):
             # This actor = ... line is the problem
             actor = Actor(name=new_name, age=new_age, gender=new_gender)
             actor.insert()
-            new_actor = actor.format()
+            # new_actor = actor.format()
 
             return jsonify({
                 'success': True,
-                'actor': new_actor
+                'actor': new_name
             }), 200
 
             # return jsonify({
