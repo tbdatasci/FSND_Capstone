@@ -62,21 +62,21 @@ def create_app(test_config=None):
         try:
             # This actor = ... line is the problem
             actor = Actor(name=new_name, age=new_age, gender=new_gender)
-            # actor.insert()
-            # new_actor = actor.format()
-
-            # return jsonify({
-            #     'success': True,
-            #     'actor': new_actor
-            # }), 200
+            actor.insert()
+            new_actor = actor.format()
 
             return jsonify({
                 'success': True,
-                'actor': "Your Mom",
-                'name': new_name,
-                'age': new_age,
-                'gender': new_gender
+                'actor': new_actor
             }), 200
+
+            # return jsonify({
+            #     'success': True,
+            #     'actor': "Your Mom",
+            #     'name': new_name,
+            #     'age': new_age,
+            #     'gender': new_gender
+            # }), 200
         except Exception as E:
             abort(422)
 
