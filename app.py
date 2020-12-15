@@ -31,8 +31,10 @@ def create_app(test_config=None):
         '''
         try:
             actors = Actor.query.order_by(Actor.id).all()
+
             if len(actors) == 0:
                 abort(404)
+
             try:
                 return_actors = [actor.format() for actor in actors]
 
@@ -40,8 +42,10 @@ def create_app(test_config=None):
                     'success': True,
                     'actors': return_actors
                 }), 200
+
             except Exception as E:
                 abort(422)
+
         except Exception as E:
             abort(500)
 
@@ -59,9 +63,12 @@ def create_app(test_config=None):
 
         if new_name is None:
             abort(400)
+
         try:
             # This actor = ... line is the problem
-            actor = Actor(name=new_name, age=new_age, gender=new_gender)
+            actor = Actor(name=new_name,
+                          age=new_age,
+                          gender=new_gender)
             actor.insert()
             # new_actor = actor.format()
 
@@ -91,12 +98,12 @@ def create_app(test_config=None):
 
         if actor is None:
             abort(404)
-        body = request.get_json()
+        body = request.json
         if body is None:
             abort(400)
-        new_name = body.get('name')
-        new_age = body.get('age')
-        new_gender = body.get('gender')
+        new_name = body['name']
+        new_age = body['age']
+        new_gender = body['gender']
         try:
             if new_name is not None:
                 actor.name = new_name
@@ -107,10 +114,10 @@ def create_app(test_config=None):
 
             actor.update()
 
-            new_actor = [actor.format()]
+            # new_actor = [actor.format()]
             return jsonify({
                 'success': True,
-                'actor': new_actor
+                'actor': new_name
             }), 200
         except Exception as E:
             abort(422)
@@ -153,8 +160,10 @@ def create_app(test_config=None):
                     'success': True,
                     'movies': return_movies
                 })
+
             except Exception as E:
                 abort(422)
+
         except Exception as E:
             abort(400)
 
@@ -165,12 +174,12 @@ def create_app(test_config=None):
         REQUIRES AUTH to CREATE NEW movie object.
         - post:movies
         '''
-        body = request.get_json()
-        new_title = body.get('title')
-        new_year = body.get('year')
-        new_month = body.get('month')
-        new_day = body.get('day')
-        new_genre = body.get('genre')
+        body = request.json
+        new_title = body['title']
+        new_year = body['year']
+        new_month = body['month']
+        new_day = body['day']
+        new_genre = body['genre']
 
         if new_title is None or new_genre is None:
             abort(400)
@@ -182,11 +191,11 @@ def create_app(test_config=None):
                           day=new_day,
                           genre=new_genre)
             movie.insert()
-            new_movie = movie.format()
+            # new_movie = movie.format()
 
             return jsonify({
                 'success': True,
-                'movie': new_movie
+                'movie': new_title
             }), 200
         except Exception as E:
             abort(422)
@@ -203,12 +212,12 @@ def create_app(test_config=None):
         if movie is None:
             abort(404)
 
-        body = request.get_json()
-        new_title = body.get('title')
-        new_year = body.get('year')
-        new_month = body.get('month')
-        new_day = body.get('day')
-        new_genre = body.get('genre')
+        body = request.json
+        new_title = body['title']
+        new_year = body['year']
+        new_month = body['month']
+        new_day = body['day']
+        new_genre = body['genre']
 
         try:
             if new_title is not None:
@@ -218,11 +227,11 @@ def create_app(test_config=None):
 
             movie.update()
 
-            new_movie = [movie.format()]
+            # new_movie = [movie.format()]
 
             return jsonify({
                 'success': True,
-                'movie': new_movie
+                'movie': new_title
             }), 200
         except Exception as E:
             abort(422)

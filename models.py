@@ -66,7 +66,7 @@ class Movie(db.Model):
     day = Column(Integer())
     genre = Column(String(50), nullable=False)
 
-    def __init__(title, year, month, day, genre):
+    def __init__(self, title, year, month, day, genre):
         self.title = title
         self.year = year
         self.month = month
