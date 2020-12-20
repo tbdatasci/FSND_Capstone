@@ -23,7 +23,9 @@ def setup_db(app):
     # app.config['SQLALCHEMY_DATABASE_URI'] = \
     #     'postgresql://postgres:postgres@localhost:5432/postgres'
     app.config['SQLALCHEMY_DATABASE_URI'] = \
-        'postgres://nbbgmnrzxlckoy:97b5054fd56c7e2c4570b43517fd47a4e0c5cff0f5e3d030ce549332287e7d48@ec2-54-85-13-135.compute-1.amazonaws.com:5432/d2ra7q0ujgfto5'
+        'postgres://nbbgmnrzxlckoy:97b5054fd56c7e2c4570b43517fd47a \
+        4e0c5cff0f5e3d030ce549332287e7d48@ec2-54-85-13-135.compute \
+        -1.amazonaws.com:5432/d2ra7q0ujgfto5'
     app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
     db.app = app
     db.init_app(app)
