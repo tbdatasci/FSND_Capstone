@@ -8,6 +8,7 @@ from urllib.request import urlopen
 AUTH0_DOMAIN = 'fsnd-tyler.us.auth0.com'
 ALGORITHMS = ['RS256']
 API_AUDIENCE = 'http://127.0.0.1:5000'
+# API_AUDIENCE = 'capstone_api'
 
 # AuthError Exception
 '''

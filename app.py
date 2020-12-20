@@ -4,27 +4,30 @@ from models import setup_db, Actor, Movie
 from flask_cors import CORS
 import json
 
+from auth import AuthError, requires_auth
+
 
 def create_app(test_config=None):
     '''
-    Home of the api logics
+    The backbone of the API
     '''
     app = Flask(__name__)
     setup_db(app)
     CORS(app)
 
-    # @app.after_request
-    # def after_request(response):
-    #     response.headers.add('Access-Control-Allow-Headers',
-    #                          'Content-Type,Authorization,true')
-    #     response.headers.add('Access-Control-Allow-Headers',
-    #                          'GET,PATCH,POST,DELETE,OPTIONS')
-    #     return response
+    @app.after_request
+    def after_request(response):
+        response.headers.add('Access-Control-Allow-Headers',
+                             'Content-Type,Authorization,true')
+        response.headers.add('Access-Control-Allow-Headers',
+                             'GET,PATCH,POST,DELETE,OPTIONS')
+        return response
 
     '''
     Actor APIs
     '''
     @app.route('/actors')
+    @requires_auth(permission='get:actors')
     def get_actors():
         '''
         Public API available to any visitors of the website
@@ -47,10 +50,10 @@ def create_app(test_config=None):
                 abort(422)
 
         except Exception as E:
-            abort(500)
+            abort(400)
 
     @app.route('/actors', methods=['POST'])
-    # @requires_auth('post:actors')
+    @requires_auth(permission='post:actors')
     def create_actor():
         '''
         REQUIRES Authorization to CREATE NEW ACTORS
@@ -65,7 +68,6 @@ def create_app(test_config=None):
             abort(400)
 
         try:
-            # This actor = ... line is the problem
             actor = Actor(name=new_name,
                           age=new_age,
                           gender=new_gender)
@@ -88,7 +90,7 @@ def create_app(test_config=None):
             abort(422)
 
     @app.route('/actors/<int:actor_id>', methods=['PATCH'])
-    # @requires_auth('patch:actors')
+    @requires_auth(permission='patch:actors')
     def update_actor(self, actor_id):
         '''
         API make EDITS to an EXISTING actor object.
@@ -99,11 +101,13 @@ def create_app(test_config=None):
         if actor is None:
             abort(404)
         body = request.json
+
         if body is None:
             abort(400)
         new_name = body['name']
         new_age = body['age']
         new_gender = body['gender']
+
         try:
             if new_name is not None:
                 actor.name = new_name
@@ -114,7 +118,6 @@ def create_app(test_config=None):
 
             actor.update()
 
-            # new_actor = [actor.format()]
             return jsonify({
                 'success': True,
                 'actor': new_name
@@ -123,12 +126,13 @@ def create_app(test_config=None):
             abort(422)
 
     @app.route('/actors/<int:actor_id>', methods=['DELETE'])
-    # @requires_auth('delete:actors')
+    @requires_auth(permission='delete:actors')
     def delete_actor(actor_id):
         '''
         Ability to delete actors from database
         '''
-        actor = Actor.query.filter(Actor.id == actor_id).one_or_more()
+        # actor = Actor.query.filter(Actor.id == actor_id).one_or_more()
+        actor = Actor.query.filter(Actor.id == actor_id).one_or_none()
 
         if actor is None:
             abort(404)
@@ -143,6 +147,7 @@ def create_app(test_config=None):
     Movie object APIs
     '''
     @app.route('/movies')
+    @requires_auth(permission='get:movies')
     def get_movies():
         '''
         Public API that is available to any visitor of the website
@@ -168,7 +173,7 @@ def create_app(test_config=None):
             abort(400)
 
     @app.route('/movies', methods=['POST'])
-    # @requires_auth('post:movies')
+    @requires_auth(permission='post:movies')
     def create_movie():
         '''
         REQUIRES AUTH to CREATE NEW movie object.
@@ -200,8 +205,8 @@ def create_app(test_config=None):
         except Exception as E:
             abort(422)
 
-    @app.route('/movies/<int:movie_id>', methods=['{PATCH'])
-    # @requires_auth('patch:movies')
+    @app.route('/movies/<int:movie_id>', methods=['PATCH'])
+    @requires_auth(permission='patch:movies')
     def update_movie(movie_id):
         '''
         Make UPDATES to an existing movie object in the database
@@ -224,6 +229,12 @@ def create_app(test_config=None):
                 movie.title = new_title
             if new_year is not None:
                 movie.year = new_year
+            if new_month is not None:
+                movie.month = new_month
+            if new_day is not None:
+                movie.day = new_day
+            if new_genre is not None:
+                movie.genre = new_genre
 
             movie.update()
 
@@ -237,7 +248,7 @@ def create_app(test_config=None):
             abort(422)
 
     @app.route('/movies/<int:movie_id>', methods=['DELETE'])
-    # @requires_auth('delete:movies')
+    @requires_auth(permission='delete:movies')
     def delete_movie(movie_id):
         '''
         REQUIRES AUTH to delete movie/row from the database.
@@ -300,6 +311,7 @@ def create_app(test_config=None):
         })
 
     return app
+
 
 app = create_app()
 

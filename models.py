@@ -3,7 +3,7 @@ from flask_sqlalchemy import SQLAlchemy
 import json
 import os
 
-database_path = os.environ.get('DATABASE_URL')
+# database_path = os.environ.get('DATABASE_URL')
 
 # database_path = 'postgres://postgres:postgres@localhost:5432/postgres'
 
@@ -13,12 +13,17 @@ db = SQLAlchemy()
 setup_db(app)
     binds a flask application and a SQLAlchemy service
 '''
+
+
 def setup_db(app):
     '''
     setup_db(app)
     | binds a flask application and a SQAlchemy service
     '''
-    app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get('DATABASE_URL')
+    # app.config['SQLALCHEMY_DATABASE_URI'] = \
+    # os.environ.get('DATABASE_URL_local')
+    app.config['SQLALCHEMY_DATABASE_URI'] = \
+        'postgresql://postgres:postgres@localhost:5432/postgres'
     app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
     db.app = app
     db.init_app(app)
@@ -62,8 +67,8 @@ class Movie(db.Model):
     id = Column(Integer(), primary_key=True)
     title = Column(String(100), nullable=False)
     year = Column(Integer(), nullable=False)
-    month = Column(Integer())
-    day = Column(Integer())
+    month = Column(Integer(), nullable=False)
+    day = Column(Integer(), nullable=False)
     genre = Column(String(50), nullable=False)
 
     def __init__(self, title, year, month, day, genre):
