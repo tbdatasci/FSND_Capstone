@@ -21,9 +21,9 @@ def setup_db(app):
     | binds a flask application and a SQAlchemy service
     '''
     # app.config['SQLALCHEMY_DATABASE_URI'] = \
-    # os.environ.get('DATABASE_URL_local')
+    #     'postgresql://postgres:postgres@localhost:5432/postgres'
     app.config['SQLALCHEMY_DATABASE_URI'] = \
-        'postgresql://postgres:postgres@localhost:5432/postgres'
+        'postgres://gagjyzcigbdpwc:317746f5145dc2756186633f4a5604a8cc586e504a3fc8f98fcd783662290cd2@ec2-54-157-66-140.compute-1.amazonaws.com:5432/dcd1karb3ge53g'
     app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
     db.app = app
     db.init_app(app)
