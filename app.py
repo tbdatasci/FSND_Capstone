@@ -35,8 +35,8 @@ def create_app(test_config=None):
         try:
             actors = Actor.query.order_by(Actor.id).all()
 
-            if len(actors) == 0:
-                abort(404)
+            # if len(actors) == 0:
+            #     abort(404)
 
             try:
                 return_actors = [actor.format() for actor in actors]
@@ -155,8 +155,8 @@ def create_app(test_config=None):
         try:
             movies = Movie.query.order_by(Movie.id).all()
 
-            if len(movies) == 0:
-                abort(404)
+            # if len(movies) == 0:
+            #     abort(404)
 
             try:
                 return_movies = [movie.format() for movie in movies]
