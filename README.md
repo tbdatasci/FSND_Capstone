@@ -253,3 +253,10 @@ response = {
           }
 }
 ```
+
+# Testing
+Run the command
+
+```bash
+python3 unit_test.py
+```
